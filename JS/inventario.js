@@ -108,6 +108,17 @@ export class Inventario {
             return `Aun no hay productos en el inventario`;
         }
     }
+
+    extraerUltimoElemento(){
+        let hayProductos = this.existenProductos();
+        if(hayProductos){
+            let auxiliar = this.inventario[this.inventario.length -1];
+            this.inventario.pop();
+            return `Se extrajo el primer producto: ${auxiliar.info()}`;
+        } else {
+            return `Aun no hay productos en el inventario`;
+        }
+    }
 }
 
 

@@ -67,24 +67,7 @@ export class Inventario {
         }
     }
 
-    agregarProductoPosicion(producto,posicion){
-        if(posicion > this.inventario.length + 1){
-            return `Posicion invalida`;
-        }
-
-        let verificacion = this.productoExistente(producto);
-        if(verificacion){
-            return `Ya existe un producto con el codigo o nombre ingresado`
-        } else {
-            for(let i = this.inventario.length - 1; i >= posicion; i--){
-            this.inventario[i + 1] = this.inventario[i];
-            }
-
-        this.inventario[posicion] = producto;
-
-        return `Se ha agregado ${producto.nombre} en la posicion ${posicion}`;
-        }
-    }
+    
 
     listar(){
         let hayProductos = this.existenProductos();
@@ -123,20 +106,6 @@ export class Inventario {
             return `Se extrajo el primer producto: ${auxiliar.info()}`;
         } else {
             return `Aun no hay productos en el inventario`;
-        }
-    }
-
-    agregarProductoInicio(producto){
-        let verificacion = this.productoExistente(producto);
-        if(verificacion){
-            return `Ya existe un producto con el codigo o nombre ingresado`
-        } else {
-        for(let i = this.inventario.length - 1; i >= 0; i--){
-            this.inventario[i + 1] = this.inventario[i]; 
-        }
-        this.inventario[0] = producto;
-
-        return `Se ha agregado ${producto.nombre}`;
         }
     }
 }

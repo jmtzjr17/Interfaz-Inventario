@@ -103,7 +103,7 @@ export class Inventario {
                 this.inventario[i] = this.inventario[i + 1]; 
             }
             this.inventario.pop();
-            return `Se extrajo el primer producto: ${auxiliar.info()}`;
+            return `Se extrajo el primer producto: ${auxiliar.info.Html()}`;
         } else {
             return `Aun no hay productos en el inventario`;
         }
@@ -114,7 +114,7 @@ export class Inventario {
         if(hayProductos){
             let auxiliar = this.inventario[this.inventario.length -1];
             this.inventario.pop();
-            return `Se extrajo el primer producto: ${auxiliar.info()}`;
+            return `Se extrajo el ultimo producto: ${auxiliar.infoHtml()}`;
         } else {
             return `Aun no hay productos en el inventario`;
         }

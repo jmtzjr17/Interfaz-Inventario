@@ -77,34 +77,15 @@ document.getElementById("btnEliminar").addEventListener("click", () => {
     limpiarCampos();
 });
 
-document.getElementById("btnAgregarPos").addEventListener("click", () => {
-    const producto = crearProducto();
-    const verificacionProducto = verificarCamposProducto(producto.codigo,producto.nombre,producto.cantidad,producto.costo);
-    const posicion = document.getElementById('txtPos').value;
-    if(verificacionProducto && posicion != ""){
-        salida.innerHTML = miInventario.agregarProductoPosicion(producto,posicion);
-    } else {
-        salida.innerHTML = `No se llenaron los campos necesarios para realizar la operacion intenta de nuevo`;
-    }
-    
-    limpiarCampos();
-});
-
-document.getElementById("btnAgregarInicio").addEventListener("click", () => {
-    const producto = crearProducto();
-    const verificacionProducto = verificarCamposProducto(producto.codigo,producto.nombre,producto.cantidad,producto.costo);
-    if(verificacionProducto){
-        salida.innerHTML = miInventario.agregarProductoInicio(producto);
-    } else {
-        salida.innerHTML = `No se llenaron los campos necesarios para realizar la operacion intenta de nuevo`;
-    }
-    limpiarCampos();
-});
-
 document.getElementById("btnExtraerPrimero").addEventListener("click", () => {
     salida.innerHTML = miInventario.extraerPrimerElemento();
     limpiarCampos();
 });
+
+document.getElementById("btnExtraerUltimo").addEventListener("click", () => {
+    salida.innerHTML = miInventario.extraerUltimoElemento();
+    limpiarCampos();
+})
 
 document.getElementById("btnListar").addEventListener("click", () => {
     salida.innerHTML = miInventario.listar();

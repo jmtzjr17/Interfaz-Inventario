@@ -7,7 +7,7 @@ export class Inventario {
     productoExistente(producto){
         let yaExiste = false;
         for(let i = 0; i < this.inventario.length; i++){
-            if(producto.codigo === this.inventario[i].codigo || producto.nombre === this.inventario[i].nombre){
+            if(producto.codigo === this.inventario[i].codigo){
                 yaExiste = true;
                 break;
             }
@@ -87,7 +87,7 @@ export class Inventario {
         if(hayProductos){
             let devolverInventario = "";
             for(let i = this.inventario.length - 1; i >= 0; i--){
-                devolverInventario += this.inventario[i].info();
+                devolverInventario += this.inventario[i].infoHtml();
             }
             return devolverInventario;
         } else {

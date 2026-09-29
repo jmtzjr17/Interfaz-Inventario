@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario</title>
+
+    <script type="module" src="JS/main.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <form>
+            <label for="txtCod">Codigo:</label>
+            <input type="number" id="txtCod" placeholder="Codigo del Producto">
+
+            <label for="txtNom">Nombre:</label>
+            <input type="text" id="txtNom" placeholder="Nombre del producto">
+
+            <label for="txtCan">Cantidad:</label>
+            <input type="number" id="txtCan">
+
+            <label for="txtNom">Costo:</label>
+            <input type="number" id="txtCos">
+
+            <label for="txtPos">Posición:</label>
+            <input type="number" id="txtPos" placeholder="Ej. 0">
+
+            <br><br>
+
+            <!--Botones-->
+
+            <button type="button" id="btnAgregar">Agregar Producto</button>
+
+            <button type="button" id="btnBuscar">Buscar Producto</button>
+
+            <button type="button" id="btnEliminar">Eliminar Producto</button>
+
+            <button type="button" id="btnAgregarPos">Agregar Producto Posicion</button>
+
+            <button type="button" id="btnAgregarInicio">Agregar Producto Inicio</button>
+
+            <button type="button" id="btnExtraerPrimero">Extraer Primer Elemento</button>
+
+            <button type="button" id="btnListar">Listar</button>
+
+            <button type="button" id="btnListarInverso">Listar Inverso</button>
+        </form>
+
+    <br><br><br>
+
+    </div>
+
+    <!--Contenedor donde se muestran las operaciones-->
+
+    <div id="salidaOperaciones">
+
+    </div>
+    
+</body>
+
+</html>

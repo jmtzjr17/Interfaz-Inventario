@@ -19,10 +19,9 @@ function limpiarCampos(){
     const nombre = document.getElementById('txtNom').value = "";
     const cantidad = document.getElementById('txtCan').value = "";
     const costo = document.getElementById('txtCos').value = "";
-    const posicion = document.getElementById('txtPos').value = "";
 }
 
-//Verifica que si se llenaron los campos necesarios pra crear un producto
+//Verifica que si se llenaron los campos necesarios para crear un producto
 function verificarCamposProducto(codigo,nombre,cantidad,costo){
     let camposCompletos = true;
     if(codigo === "" || nombre === "" || cantidad === "" || costo === ""){
@@ -59,7 +58,7 @@ document.getElementById("btnBuscar").addEventListener("click", () => {
     const verificacionCodigo = verificarCamposCodigo(codigo);
     if(verificacionCodigo){
         const producto = miInventario.buscarPorCodigo(codigo);
-        salida.innerHTML = producto ? `Si existe el producto con el codigo ${codigo}` : `No existe el producto con el codigo ${codigo}`; 
+        salida.innerHTML = producto != -1 ? `Si existe el producto con el codigo ${codigo}` : `No existe el producto con el codigo ${codigo}`; 
     } else {
         salida.innerHTML = `No se lleno el campo codigo, Intenta de nuevo`;
     }
@@ -85,7 +84,7 @@ document.getElementById("btnExtraerPrimero").addEventListener("click", () => {
 document.getElementById("btnExtraerUltimo").addEventListener("click", () => {
     salida.innerHTML = miInventario.extraerUltimoElemento();
     limpiarCampos();
-})
+});
 
 document.getElementById("btnListar").addEventListener("click", () => {
     salida.innerHTML = miInventario.listar();

@@ -22,6 +22,24 @@ export class Inventario {
         }
         return hayProductos;
     }
+
+    busquedaBinaria(arreglo,objetivo){
+        let inicio = 0;
+        let fin = arreglo.length - 1;
+        
+        while (inicio <= fin){
+            let medio = Math.floor((inicio + fin) / 2); 
+
+            if (arreglo[medio].codigo === objetivo){
+                return medio;
+            } else if (arreglo[medio].codigo < objetivo){
+                inicio = medio + 1;
+            } else {
+                fin = medio - 1;
+            }
+        }
+        return -1;
+    }
     // ----------------------------------------------------------
 
     agregarProducto(producto){
@@ -35,30 +53,17 @@ export class Inventario {
     }
 
     buscarPorCodigo(codigo){
-        let encontrado = false;
-        for(let i = 0; i < this.inventario.length; i++){
-            if(this.inventario[i].codigo === codigo){
-                encontrado = true;
-                break;
-            } 
-        }
-        return encontrado ? true : false;
+        let encontrado = this.busquedaBinaria(this.inventario,codigo);
+
+        return encontrado;
     }
 
     eliminarPorCodigo(codigo){
-        let encontrado = false;
-        let posicion;
-        for(let i = 0; i < this.inventario.length; i++){
-            if(this.inventario[i].codigo === codigo){
-                posicion = i;
-                encontrado = true;
-                break;
-            } 
-        }
-
-        if(encontrado){
-            for(let i = posicion; i < this.inventario.length; i++){
-                this.inventario[i] = this.inventario[i + 1];
+        let encontrado = this.busquedaBinaria(this.inventario,codigo);
+        
+        if(encontrado != -1){
+            for(let i = encontrado; i < this.inventario.length; i++){
+                this.inventario[encontrado] = this.inventario[i + 1];
             }
             this.inventario.pop();
             return `Producto con el codigo: ${codigo} ha sido eliminado`;
@@ -66,8 +71,6 @@ export class Inventario {
             return `No se encontro ningun producto con el codigo ${codigo}`;
         }
     }
-
-    
 
     listar(){
         let hayProductos = this.existenProductos();

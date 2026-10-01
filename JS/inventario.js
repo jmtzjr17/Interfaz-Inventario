@@ -1,32 +1,27 @@
 export class Inventario {
-    constructor(){
+    constructor() {
         this.inventario = [];
     }
 
-    //----------------- Utils -------------------------------
-    productoExistente(producto){
-        let yaExiste = this.busquedaBinaria(producto.codigo);
-        return yaExiste;
+    // ----------------- Utils -------------------------------
+    productoExistente(producto) {
+        return this.busquedaBinaria(producto.codigo);
     }
 
-    existenProductos(){
-        let hayProductos = false;
-        if(this.inventario.length > 0){
-            hayProductos = true;
-        }
-        return hayProductos;
+    existenProductos() {
+        return this.inventario.length > 0;
     }
 
-    busquedaBinaria(objetivo){
+    busquedaBinaria(objetivo) {
         let inicio = 0;
         let fin = this.inventario.length - 1;
-        
-        while (inicio <= fin){
-            let medio = Math.floor((inicio + fin) / 2); 
 
-            if (this.inventario[medio].codigo === objetivo){
+        while (inicio <= fin) {
+            let medio = Math.floor((inicio + fin) / 2);
+
+            if (this.inventario[medio].codigo === objetivo) {
                 return medio;
-            } else if (this.inventario[medio].codigo < objetivo){
+            } else if (this.inventario[medio].codigo < objetivo) {
                 inicio = medio + 1;
             } else {
                 fin = medio - 1;
@@ -50,96 +45,91 @@ export class Inventario {
                 fin = medio - 1;
             }
         }
-        return inicio; 
+        return inicio;
     }
-    // ----------------------------------------------------------
 
-    agregarProducto(producto){
+    // ---------------- Acciones ----------------------------
+
+    agregarProducto(producto) {
         let verificacion = this.productoExistente(producto);
-        if(verificacion != -1){
-            return `Ya existe un producto con el codigo ingresado`;
-        } else {
-            let posicion = this.posicionDeInsercion(producto.codigo);
-
-            for (let i = this.inventario.length; i > posicion; i--) {
-            this.inventario[i] = this.inventario[i - 1];
-            }
-
-            this.inventario[posicion] = producto;
-
-            return `Se ha agregado ${producto.nombre}`;
+        if (verificacion !== -1) {
+            return `Ya existe un producto con el código ingresado.`;
         }
+
+        let posicion = this.posicionDeInsercion(producto.codigo);
+
+        // Desplazamiento manual hacia la derecha
+        for (let i = this.inventario.length; i > posicion; i--) {
+            this.inventario[i] = this.inventario[i - 1];
+        }
+
+        this.inventario[posicion] = producto;
+        return `Se ha agregado ${producto.nombre}`;
     }
 
-    buscarPorCodigo(codigo){
-        let encontrado = this.busquedaBinaria(codigo);
-        return encontrado;
+    buscarPorCodigo(codigo) {
+        return this.busquedaBinaria(codigo);
     }
 
-    eliminarPorCodigo(codigo){
+    eliminarPorCodigo(codigo) {
         let encontrado = this.busquedaBinaria(codigo);
-        
-        if(encontrado != -1){
-            for(let i = encontrado; i < this.inventario.length - 1; i++){
+
+        if (encontrado !== -1) {
+            // Desplazamiento manual hacia la izquierda
+            for (let i = encontrado; i < this.inventario.length - 1; i++) {
                 this.inventario[i] = this.inventario[i + 1];
             }
             this.inventario.pop();
-            return `Producto con el codigo: ${codigo} ha sido eliminado`;
+            return `Producto con el código ${codigo} ha sido eliminado.`;
         } else {
-            return `No se encontro ningun producto con el codigo ${codigo}`;
+            return `No se encontró ningún producto con el código ${codigo}.`;
         }
     }
 
-    listar(){
-        let hayProductos = this.existenProductos();
-        if(hayProductos){
+    listar() {
+        if (this.existenProductos()) {
             let devolverInventario = "";
-            for(let i = 0; i < this.inventario.length; i++){
+            for (let i = 0; i < this.inventario.length; i++) {
                 devolverInventario += this.inventario[i].infoHtml();
             }
             return devolverInventario;
         } else {
-            return `Aun no hay productos en el inventario`;
+            return `Aún no hay productos en el inventario.`;
         }
     }
 
-    listarInverso(){
-        let hayProductos = this.existenProductos();
-        if(hayProductos){
+    listarInverso() {
+        if (this.existenProductos()) {
             let devolverInventario = "";
-            for(let i = this.inventario.length - 1; i >= 0; i--){
+            for (let i = this.inventario.length - 1; i >= 0; i--) {
                 devolverInventario += this.inventario[i].infoHtml();
             }
             return devolverInventario;
         } else {
-            return `Aun no hay productos en el inventario`;
+            return `Aún no hay productos en el inventario.`;
         }
     }
 
-    extraerPrimerElemento(){
-        let hayProductos = this.existenProductos();
-        if(hayProductos){
+    extraerPrimerElemento() {
+        if (this.existenProductos()) {
             let auxiliar = this.inventario[0];
-            for(let i = 0; i < this.inventario.length - 1; i++){
-                this.inventario[i] = this.inventario[i + 1]; 
+            for (let i = 0; i < this.inventario.length - 1; i++) {
+                this.inventario[i] = this.inventario[i + 1];
             }
             this.inventario.pop();
             return `Se extrajo el primer producto: ${auxiliar.infoHtml()}`;
         } else {
-            return `Aun no hay productos en el inventario`;
+            return `Aún no hay productos en el inventario.`;
         }
     }
 
-    extraerUltimoElemento(){
-        let hayProductos = this.existenProductos();
-        if(hayProductos){
-            let auxiliar = this.inventario[this.inventario.length -1];
+    extraerUltimoElemento() {
+        if (this.existenProductos()) {
+            let auxiliar = this.inventario[this.inventario.length - 1];
             this.inventario.pop();
-            return `Se extrajo el ultimo producto: ${auxiliar.infoHtml()}`;
+            return `Se extrajo el último producto: ${auxiliar.infoHtml()}`;
         } else {
-            return `Aun no hay productos en el inventario`;
+            return `Aún no hay productos en el inventario.`;
         }
     }
 }
-
-

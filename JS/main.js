@@ -4,76 +4,65 @@ import { Inventario } from "./inventario.js";
 const miInventario = new Inventario();
 const salida = document.getElementById("salidaOperaciones");
 
-function crearProducto(){
-    const codigo = parseInt(document.getElementById('txtCod').value);
-    const nombre = document.getElementById('txtNom').value;
-    const cantidad = document.getElementById('txtCan').value;
-    const costo = document.getElementById('txtCos').value;
-
-    return new Producto(codigo,nombre,cantidad,costo);
+// Limpia los inputs del formulario
+function limpiarCampos() {
+    document.getElementById('txtCod').value = "";
+    document.getElementById('txtNom').value = "";
+    document.getElementById('txtCan').value = "";
+    document.getElementById('txtCos').value = "";
 }
 
-//Elimina los datos en los campos de llenado
-function limpiarCampos(){
-    const codigo = document.getElementById('txtCod').value =  "";
-    const nombre = document.getElementById('txtNom').value = "";
-    const cantidad = document.getElementById('txtCan').value = "";
-    const costo = document.getElementById('txtCos').value = "";
+// Verifica strings vacíos directamente
+function verificarCamposProducto(codigo, nombre, cantidad, costo) {
+    return codigo.trim() !== "" && nombre.trim() !== "" && cantidad.trim() !== "" && costo.trim() !== "";
 }
 
-//Verifica que si se llenaron los campos necesarios para crear un producto
-function verificarCamposProducto(codigo,nombre,cantidad,costo){
-    let camposCompletos = true;
-    if(codigo === "" || nombre === "" || cantidad === "" || costo === ""){
-        camposCompletos = false;
-    }
-    return camposCompletos;
-}
-
-
-//Verifica que si se lleno el campo codigo 
-function verificarCamposCodigo(codigo){
-    let campoCompleto = true;
-    if(codigo === ""){
-        campoCompleto = false;
-    }
-    return campoCompleto;
+function verificarCampoCodigo(codigo) {
+    return codigo.trim() !== "";
 }
 
 // ------------------- Eventos ------------------------- //
 
-document.getElementById("btnAgregar").addEventListener("click",() => {
-    const producto = crearProducto();
-    const verificacionProducto = verificarCamposProducto(producto.codigo,producto.nombre,producto.cantidad,producto.costo);
-    if(verificacionProducto){
+document.getElementById("btnAgregar").addEventListener("click", () => {
+    const rawCodigo = document.getElementById('txtCod').value;
+    const rawNombre = document.getElementById('txtNom').value;
+    const rawCantidad = document.getElementById('txtCan').value;
+    const rawCosto = document.getElementById('txtCos').value;
+
+    if (verificarCamposProducto(rawCodigo, rawNombre, rawCantidad, rawCosto)) {
+        const producto = new Producto(rawCodigo, rawNombre, rawCantidad, rawCosto);
         salida.innerHTML = miInventario.agregarProducto(producto);
+        limpiarCampos();
     } else {
-        salida.innerHTML = `No se completaron los campos necesarios para agregar el producto, Intenta de nuevo`;
+        salida.innerHTML = `No se completaron los campos necesarios para agregar el producto. Intenta de nuevo.`;
     }
-    limpiarCampos();
 });
 
 document.getElementById("btnBuscar").addEventListener("click", () => {
-    const codigo = document.getElementById('txtCod').value;
-    const verificacionCodigo = verificarCamposCodigo(codigo);
-    if(verificacionCodigo){
-        const producto = miInventario.buscarPorCodigo(codigo);
-        salida.innerHTML = producto != -1 ? `Si existe el producto con el codigo ${codigo}` : `No existe el producto con el codigo ${codigo}`; 
+    const rawCodigo = document.getElementById('txtCod').value;
+    
+    if (verificarCampoCodigo(rawCodigo)) {
+        const codigo = Number(rawCodigo);
+        const pos = miInventario.buscarPorCodigo(codigo);
+        salida.innerHTML = pos !== -1 
+            ? `Sí existe el producto con el código ${codigo}` 
+            : `No existe el producto con el código ${codigo}`;
+        limpiarCampos();
     } else {
-        salida.innerHTML = `No se lleno el campo codigo, Intenta de nuevo`;
+        salida.innerHTML = `No se llenó el campo código. Intenta de nuevo.`;
     }
-    limpiarCampos();
 });
 
 document.getElementById("btnEliminar").addEventListener("click", () => {
-    const codigo = document.getElementById('txtCod').value;
-    const verificacionCodigo = verificarCamposCodigo(codigo);
-    if(verificacionCodigo){
+    const rawCodigo = document.getElementById('txtCod').value;
+    
+    if (verificarCampoCodigo(rawCodigo)) {
+        const codigo = Number(rawCodigo);
         salida.innerHTML = miInventario.eliminarPorCodigo(codigo);
+        limpiarCampos();
     } else {
-        salida.innerHTML = `No se lleno el campo codigo, Intenta de nuevo`;
+        salida.innerHTML = `No se llenó el campo código. Intenta de nuevo.`;
     }
-    limpiarCampos();
 });
 
 document.getElementById("btnExtraerPrimero").addEventListener("click", () => {
@@ -95,4 +84,3 @@ document.getElementById("btnListarInverso").addEventListener("click", () => {
     salida.innerHTML = miInventario.listarInverso();
     limpiarCampos();
 });
-

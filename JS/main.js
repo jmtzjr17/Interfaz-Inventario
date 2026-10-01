@@ -5,7 +5,7 @@ const miInventario = new Inventario();
 const salida = document.getElementById("salidaOperaciones");
 
 function crearProducto(){
-    const codigo = document.getElementById('txtCod').value;
+    const codigo = parseInt(document.getElementById('txtCod').value);
     const nombre = document.getElementById('txtNom').value;
     const cantidad = document.getElementById('txtCan').value;
     const costo = document.getElementById('txtCos').value;
